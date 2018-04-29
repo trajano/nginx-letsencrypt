@@ -1,5 +1,7 @@
 # Nginx + LetsEncrypt on Docker
 
+This container provides a nginx with LetsEncypt enabled.  When tested with SSLLabs it should yield and A+ rating.  It supports streaming along with the normal proxying support.
+
 ## How nginx is initially setup
 
 1. `EMAIL` environment variable specifies the email address that will recieve the notifications when there is a renewal needed

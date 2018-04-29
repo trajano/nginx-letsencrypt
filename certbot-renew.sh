@@ -1,2 +1,2 @@
 #!/bin/sh
-certbot renew -a wwwroot --wwwroot /tmp
+certbot renew -a webroot -w /tmp
