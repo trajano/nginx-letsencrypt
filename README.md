@@ -26,3 +26,5 @@ This container provides a nginx with LetsEncypt enabled.  When tested with SSLLa
 ## NOTE
 
 * On first initialization there will be no output for a while, this is because the DHPARAM generation takes quite a bit of time combined with the initial certificate generation.
+* The `worker_processes` value is adjusted automatically to the number of available CPUs from *cgroup*, nginx official image hard codes it to `1`.
+* Due to the nature of nginx and SSL certificates, it is not safe to run this configuration with multiple replicas especially when there are renewals.  The `worker_processes` value is adjusted automatically to the number of available CPUs allocated though so it can handle more load.

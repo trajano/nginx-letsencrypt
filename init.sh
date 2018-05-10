@@ -27,5 +27,7 @@ fi
 ) 200>/etc/letsencrypt/lock
 
 DOMAIN=$(echo $DOMAINS | cut -d ',' -f 1) envsubst < /etc/nginx/conf.d/default.conf.tmpl > /etc/nginx/conf.d/default.conf
+NUMPROCS=$(cat /sys/fs/cgroup/cpuacct/cpuacct.usage_percpu | wc -w)
+sed -i "s/worker_processes\\s\\+1;/worker_processes ${NUMPROCS};/" /etc/nginx/nginx.conf
 crond
 exec nginx -g "daemon off;"
