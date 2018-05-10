@@ -27,5 +27,5 @@ fi
 ) 200>/etc/letsencrypt/lock
 
 DOMAIN=$(echo $DOMAINS | cut -d ',' -f 1) envsubst < /etc/nginx/conf.d/default.conf.tmpl > /etc/nginx/conf.d/default.conf
-crond &
+crond
 exec nginx -g "daemon off;"
