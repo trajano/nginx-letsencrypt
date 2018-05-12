@@ -26,12 +26,13 @@ fi
 
 ) 200>/etc/letsencrypt/lock
 
-for server in $(echo $DOMAINS | sed s/,/ /g )
+DOMAIN=$(echo $DOMAINS | cut -d ',' -f 1) SERVER=${server} envsubst < /etc/nginx/ssl.conf.tmpl > /etc/nginx/ssl.conf
+for server in $(echo $DOMAINS | sed 's/,/ /g' )
 do
-  DOMAIN=$(echo $DOMAINS | cut -d ',' -f 1) SERVER=${server} envsubst < /etc/nginx/conf.d/default.conf.tmpl > /etc/nginx/conf.d/${server}.conf
-  if [ ! -e /etc/nginx/conf.d/${server}.conf.* ]
+  DOMAIN=$(echo $DOMAINS | cut -d ',' -f 1) SERVER=${server} envsubst < /etc/nginx/server.conf.tmpl > /etc/nginx/site.d/${server}.conf
+  if [ ! -e /etc/nginx/deployment.d/${server}.conf.* ] && [ ! -e /etc/nginx/conf.d/${server}.conf.* ]
   then
-    echo "return 502;" > /etc/nginx/conf.d/${server}.conf.default
+    echo "return 502;" > /etc/nginx/deployment.d/${server}.conf.default
   fi
 done
 NUMPROCS=$(cat /sys/fs/cgroup/cpuacct/cpuacct.usage_percpu | wc -w)

@@ -10,9 +10,13 @@ This container provides a nginx with LetsEncypt enabled.  When tested with SSLLa
 
 # Customization points
 
-`/etc/nginx/conf.d/{server_name}.conf.*` is expected to contain the virtual server specific configurations.  The default configuration will simply `return 502` (gateway eror) for every request.  The `/etc/nginx/conf.d` folder can be mounted as a volume if desired.
+The `/etc/nginx/conf.d` folder is processed and contains deployment specific configurations done through Docker `configs`.  This is not a volume mount.  This is processed before `deployment.d`.
 
-`/etc/nginx/stream.d` is expected to contain stream specific configurations which are useful for passing the request / response as is to an upstream server.  The `/etc/nginx/stream.d` folder can be mounted as a volume if desired.
+The `/etc/nginx/deployment.d` folder is also processed and contains deployment specfific configurations that can be mounted as a volume if desired.
+
+`/etc/nginx/{conf|deployment}.d/{server_name}.conf.*` is expected to contain the virtual server specific configurations.  The default configuration will simply `return 502` (gateway eror) for every request.
+
+`/etc/nginx/{conf|deployment}.d/*.conf.stream` is expected to contain stream specific configurations which are useful for passing the request / response as is to an upstream server.
 
 The following is an example of an upstream server called `intranet` which the nginx server will route to if the request is for `i.trajano.net` the `default default_https` is needed to make it do the normal processing specified in the previous paragraph.
 
