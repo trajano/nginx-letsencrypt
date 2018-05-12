@@ -10,9 +10,11 @@ This container provides a nginx with LetsEncypt enabled.  When tested with SSLLa
 
 # Customization points
 
-`/etc/conf.d` is expected to contain the virtual server specific configurations.  The default configuration will simply `return 502` (gateway eror) for every request except for the `/.well-known/acme-challenge` URI which points to `/tmp/.well-known/acme-challenge` and that provides the challenges required by LetsEncrypt for renewals.
+`/etc/nginx/conf.d` is expected to contain the virtual server specific configurations.  The default configuration will simply `return 502` (gateway eror) for every request except for the `/.well-known/acme-challenge` URI which points to `/tmp/.well-known/acme-challenge` and that provides the challenges required by LetsEncrypt for renewals.
 
-`/etc/stream.d` is expected to contain stream specific configurations which are useful for passing the request / response as is to an upstream server.  This is an example of an upstream server called `intranet` which the nginx server will route to if the request is for `i.trajano.net` the `default default_https` is needed to make it do the normal processing specified in the previous paragraph.
+`/etc/nginx/ssl.conf` is included in the default SSL server configuration which has already been configured to get an A+ rating in SSL labs.  expected to contain the virtual server specific configurations.  The default configuration will simply `return 502` (gateway eror) for every request.
+
+`/etc//nginx/stream.d` is expected to contain stream specific configurations which are useful for passing the request / response as is to an upstream server.  This is an example of an upstream server called `intranet` which the nginx server will route to if the request is for `i.trajano.net` the `default default_https` is needed to make it do the normal processing specified in the previous paragraph.
 
     upstream intranet {
         server intranet:443;

@@ -7,6 +7,7 @@ RUN apk add py-urllib3 openssl certbot curl bash --no-cache --repository http://
 COPY certbot-renew.sh /etc/periodic/bid/certbot-renew.sh
 COPY conf.d/* /etc/nginx/conf.d/
 COPY nginx.conf /etc/nginx/nginx.conf
+COPY ssl.conf /etc/nginx/ssl.conf
 COPY init.sh /init
 RUN echo "0       */12    *       *       *       run-parts /etc/periodic/bid" >> /etc/crontabs/root && \
     chmod 644 /etc/nginx/conf.d/* && \
