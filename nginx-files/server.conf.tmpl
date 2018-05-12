@@ -1,5 +1,6 @@
 server {
-    listen unix:/var/run/nginx.sock ssl http2 default_server;
+   	server_name "${SERVER}";
+    listen unix:/var/run/nginx.sock ssl http2;
     ssl_certificate     /etc/letsencrypt/live/${DOMAIN}/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/${DOMAIN}/privkey.pem;
     ssl_dhparam         /etc/letsencrypt/dhparam.pem;
@@ -13,6 +14,6 @@ server {
     ssl_stapling_verify on;
     resolver 127.0.0.11;
 
-    include /etc/nginx/ssl.conf;
+    include /etc/nginx/conf.d/${SERVER}.conf.*;
 
 }
