@@ -15,13 +15,13 @@ fi
 (
 flock -s 200
 
-if [ ! -e /etc/letsencrypt/live ]
+if [ -e /etc/letsencrypt/live ]
 then
-
+  certbot renew -a webroot -w /tmp
+else
   openssl dhparam -out /etc/letsencrypt/dhparam.pem 4096 > /dev/null 2>&1 &
   certbot -n -q certonly --standalone --email ${EMAIL} --agree-tos --rsa-key-size 4096 --domains ${DOMAINS}
   wait
-
 fi
 
 ) 200>/etc/letsencrypt/lock
@@ -37,5 +37,5 @@ do
 done
 NUMPROCS=$(cat /sys/fs/cgroup/cpuacct/cpuacct.usage_percpu | wc -w)
 sed -i "s/worker_processes\\s\\+1;/worker_processes ${NUMPROCS};/" /etc/nginx/nginx.conf
-crond
+crond -f &
 exec nginx -g "daemon off;"
