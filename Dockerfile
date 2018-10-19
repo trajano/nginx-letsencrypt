@@ -1,4 +1,4 @@
-FROM nginx:1.14.0-alpine
+FROM nginx:1.15.5-alpine
 LABEL maintainer="archie@trajano.net"
 EXPOSE 443
 VOLUME /etc/letsencrypt
