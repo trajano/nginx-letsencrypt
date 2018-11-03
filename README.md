@@ -5,7 +5,7 @@ This container provides a nginx with LetsEncypt enabled.  When tested with SSLLa
 ## How nginx is initially setup
 
 1. `EMAIL` environment variable specifies the email address that will recieve the notifications when there is a renewal needed
-2. `SERVERS` environment variable specifies a *comma* separated list of FQDNs for the certificate.  It is expected that the first one would be primary and will be put in the `/etc/letsencrypt/live` folder.  (Comma separated was choses to avoid the hassle of adding extra quotes)
+2. `DOMAINS` environment variable specifies a *comma* separated list of FQDNs for the certificate.  It is expected that the first one would be primary and will be put in the `/etc/letsencrypt/live` folder.  (Comma separated was choses to avoid the hassle of adding extra quotes)
 3. When the `/etc/letsencrypt/live folder` is missing the `init` script will start up `certbot` in standalone mode.  This will create the necessary files to enable SSL.  Otherwise we would require two configuration files for nginx (one with and one without SSL).
 
 # Customization points

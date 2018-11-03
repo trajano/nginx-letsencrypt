@@ -17,7 +17,7 @@ flock -s 200
 
 if [ -e /etc/letsencrypt/live ]
 then
-  certbot renew -a webroot -w /tmp
+  certbot -n -q certonly --expand --standalone --email ${EMAIL} --agree-tos --rsa-key-size 4096 --domains ${DOMAINS}
 else
   openssl dhparam -out /etc/letsencrypt/dhparam.pem 4096 > /dev/null 2>&1 &
   certbot -n -q certonly --standalone --email ${EMAIL} --agree-tos --rsa-key-size 4096 --domains ${DOMAINS}
