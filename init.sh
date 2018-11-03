@@ -19,7 +19,10 @@ if [ -e /etc/letsencrypt/live ]
 then
   certbot -n -q certonly --expand --standalone --email ${EMAIL} --agree-tos --rsa-key-size 4096 --domains ${DOMAINS}
 else
-  openssl dhparam -out /etc/letsencrypt/dhparam.pem 4096 > /dev/null 2>&1 &
+  echo "Generating ssl dhparam for nginx ..."
+  # see https://security.stackexchange.com/a/95184/26281
+  openssl dhparam -dsaparam -out /etc/letsencrypt/dhparam.pem 4096 > /dev/null 2>&1 &
+  echo "Done generating ssl dhparam"
   certbot -n -q certonly --standalone --email ${EMAIL} --agree-tos --rsa-key-size 4096 --domains ${DOMAINS}
   wait
 fi
