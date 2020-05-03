@@ -1,8 +1,10 @@
-FROM nginx:1.15.5-alpine
+FROM nginx:1.18.0-alpine
 LABEL maintainer="archie@trajano.net"
+ENV NGINX_VERSION=1.18.0 \
+    CERTBOT_VERSION=1.0.0
 EXPOSE 443
 VOLUME /etc/letsencrypt
-RUN apk add py-urllib3 openssl certbot curl bash --no-cache --repository http://dl-3.alpinelinux.org/alpine/v3.7/community/ --repository http://dl-3.alpinelinux.org/alpine/v3.7/main/ \
+RUN apk add py-urllib3 openssl certbot curl bash \
   && rm -rf /var/cache/apk/*
 COPY certbot-renew.sh /
 COPY nginx-files/* /etc/nginx/
